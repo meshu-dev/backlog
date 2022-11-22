@@ -4,7 +4,6 @@
   import { useCategoryStore } from '@/stores/CategoryStore';
   import { useItemStore } from '@/stores/ItemStore';
   import ItemView from '@/components/Item/ItemView.vue';
-  import CategorySelector from '@/components/Category/CategorySelector.vue';
   import ItemList from '@/components/Item/ItemList.vue';
   import ItemDeleteDialog from '@/components/Item/ItemDeleteDialog.vue';
 

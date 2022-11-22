@@ -1,13 +1,15 @@
 <script setup>
   import { ref, onMounted } from 'vue';
   import { useCategoryStore } from '@/stores/CategoryStore';
+  import { useCategorySelectStore } from '@/stores/CategorySelectStore';
 
   const categoryStore = useCategoryStore();
-  const selectedCategory = ref(categoryStore.getSelectedOption);
+  const categorySelectStore = useCategorySelectStore();
+  const selectedCategory = ref(categorySelectStore.getSelectedOption);
 
   const onCategoryChange = (data) => {
     console.log('data', data);
-    categoryStore.setSelectedOption(data);
+    categorySelectStore.setSelectedOption(data);
     categoryStore.setSelectedCategory(data.value);
   };
 
@@ -22,7 +24,7 @@
     <v-select
       v-if="categoryStore.getTotal > 0"
       v-model="selectedCategory"
-      :items="categoryStore.getCategoryOptions"
+      :items="categorySelectStore.getCategoryOptions"
       item-title="text"
       item-value="value"
       return-object

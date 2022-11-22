@@ -1,15 +1,11 @@
 import { defineStore } from 'pinia';
 import { categoryService } from '../helpers/api';
 
-const allOption = { text: 'All', value: 0 };
-
 export const useCategoryStore = defineStore({
   id: 'categories',
   state: () => ({
     categories: [],
     category: null,
-    allOption: allOption,
-    selectedOption: allOption,
     total: 0,
     pageLimit: 10
   }),
@@ -19,23 +15,6 @@ export const useCategoryStore = defineStore({
     },
     getCategoryNames(state) {
       return state.categories.map(category => category.name);
-    },
-    getAllOption(state) {
-      return state.allOption;
-    },
-    getSelectedOption(state) {
-      return state.selectedOption;
-    },
-    getCategoryOptions(state) {
-      const options = [allOption];
-      const categoryOptions = state.categories.map((category) => {
-        return {
-          text: category.name,
-          value: category.id
-        };
-      });
-
-      return options.concat(categoryOptions);
     },
     getCategory(state) {
       return state.category;
@@ -63,9 +42,6 @@ export const useCategoryStore = defineStore({
         }
       }
       this.category = null;
-    },
-    setSelectedOption(option) {
-      this.selectedOption = option;
     }
   }
 });
