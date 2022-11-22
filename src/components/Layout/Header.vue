@@ -22,7 +22,7 @@
       <span id="header-logo">Backlog</span>
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/add-item">Add Item</RouterLink>
+        <RouterLink to="/item/new">Add Item</RouterLink>
       </nav>
     </div>
   </header>

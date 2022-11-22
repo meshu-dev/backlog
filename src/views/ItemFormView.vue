@@ -9,6 +9,8 @@
   const categoryStore = useCategoryStore();
   const itemStore = useItemStore();
   
+  const form = false;
+  
   const onSubmit = () => {
 
   };

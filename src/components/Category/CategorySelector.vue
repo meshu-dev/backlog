@@ -18,7 +18,7 @@
 
 <template>
   <div id="category-selector">
-    <label>Select Category:</label>
+    <label>Category:</label>
     <v-select
       v-if="categoryStore.getTotal > 0"
       v-model="selectedCategory"

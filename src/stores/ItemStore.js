@@ -13,6 +13,17 @@ export const useItemStore = defineStore({
     getItems(state) {
       return state.items;
     },
+    getItemsByCategoryId(state) {
+      return (categoryId) => {
+        if (!categoryId) {
+          return this.items;
+        }
+
+        return state.items.filter((item) => {
+          return item.category.id == categoryId
+        });
+      };
+    },
     getItemByCategory(state) {
       return (category) => {
         if (!category || category === 'All') {

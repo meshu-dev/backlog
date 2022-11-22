@@ -11,6 +11,9 @@
   const layoutStore = useLayoutStore();
   const categoryStore = useCategoryStore();
   const itemStore = useItemStore();
+  const getItems = () => {
+    return itemStore.getItemsByCategoryId(categoryStore.getCategoryId);
+  };
   
   onMounted(async () => {
     await itemStore.fetchItems();
@@ -20,9 +23,12 @@
 <template>
   <div id="item-list">
     <ItemView
-      v-for='item in itemStore.getItemByCategory("Test Category 4")'
+      v-for='item in getItems()'
       :key='item.id'
       :item='item' />
+  </div>
+  <div v-if="getItems().length == 0">
+    No items available for selected category
   </div>
   <ItemDeleteDialog />
 </template>
@@ -30,5 +36,6 @@
 <style lang="scss">
   #item-list {
     display: flex;
+    flex-wrap: wrap;
   }
 </style>

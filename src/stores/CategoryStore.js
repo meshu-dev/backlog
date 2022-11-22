@@ -40,6 +40,9 @@ export const useCategoryStore = defineStore({
     getCategory(state) {
       return state.category;
     },
+    getCategoryId(state) {
+      return state.category && state.category.id ? state.category.id : 0;
+    },
     getTotal(state) {
       return state.categories.length;
     },
