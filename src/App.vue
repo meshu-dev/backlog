@@ -1,16 +1,9 @@
 <script setup>
   import { RouterView } from "vue-router";
-  import { useAuthStore } from './stores/AuthStore';
-  import Header from "./components/Layout/Header.vue";
-
-  const authStore = useAuthStore();
 </script>
 
 <template>
-  <Header v-if="authStore.isLoggedIn" />
-  <main>
-    <RouterView />
-  </main>
+  <RouterView />
 </template>
 
 <style scoped>

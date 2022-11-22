@@ -26,9 +26,6 @@ export const useCategoryStore = defineStore({
     getSelectedOption(state) {
       return state.selectedOption;
     },
-    getCategoryOptions2(state) {
-      return ['All'].concat(this.getCategoryNames);
-    },
     getCategoryOptions(state) {
       const options = [allOption];
       const categoryOptions = state.categories.map((category) => {

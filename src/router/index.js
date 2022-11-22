@@ -27,12 +27,20 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue")
     },
     {
-      path: "/add-item",
+      path: "/item/new",
       name: "add-item",
       meta: {
         requiresAuth: true
       },
-      component: () => import("../views/AddItemView.vue")
+      component: () => import("../views/ItemFormView.vue")
+    },
+    {
+      path: "/item/:id",
+      name: "edit-item",
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import("../views/ItemFormView.vue")
     }
   ],
 });
