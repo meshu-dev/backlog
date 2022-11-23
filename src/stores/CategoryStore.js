@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { callApi } from '../helpers/store';
 import { categoryService } from '../helpers/api';
 
 export const useCategoryStore = defineStore({
@@ -31,6 +32,7 @@ export const useCategoryStore = defineStore({
   },
   actions: {
     async fetchCategories() {
+      /*
       try {
         const apiCategories = await categoryService.getAll();
         this.categories = apiCategories['data'] ?? [];
@@ -40,7 +42,12 @@ export const useCategoryStore = defineStore({
         }
 
         console.log('ERR', error, error.cause, `C: [[[${error.cause}]]]`);
-      }
+      } */
+
+      callApi(async () => {
+        const apiCategories = await categoryService.getAll();
+        this.categories = apiCategories['data'] ?? [];
+      });
     },
     setSelectedCategory(categoryId) {
       for (let category of this.categories) {

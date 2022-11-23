@@ -15,8 +15,8 @@ export const authService = new AuthService(
 );
 
 export const itemService = new ItemService(
-    apiService,
-    'items'
+  apiService,
+  'items'
 );
 
 export const categoryService = new CategoryService(
