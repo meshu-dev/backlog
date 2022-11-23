@@ -10,6 +10,7 @@
   const layoutStore = useLayoutStore();
   const categoryStore = useCategoryStore();
   const itemStore = useItemStore();
+
   const getItems = () => {
     return itemStore.getItemsByCategoryId(categoryStore.getCategoryId);
   };

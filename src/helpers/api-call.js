@@ -15,8 +15,6 @@ const apiRequest = async (method, url, params) => {
     headers
   };
 
-  console.log('apiRequest', params, JSON.stringify(params));
-
   if (params) {
     fetchParams['body'] = JSON.stringify(params);
   }

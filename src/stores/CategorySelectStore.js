@@ -17,17 +17,23 @@ export const useCategorySelectStore = defineStore({
       return state.selectedOption;
     },
     getCategoryOptions(state) {
-      const categoryStore = useCategoryStore();
-      const options = [allOption];
-      
-      const categoryOptions = categoryStore.getCategories.map((category) => {
-        return {
-          text: category.name,
-          value: category.id
-        };
-      });
+      return (incAllOption) => {
+        const categoryStore = useCategoryStore();
+        const options = [];
 
-      return options.concat(categoryOptions);
+        if (incAllOption) {
+          options.push(allOption);
+        }
+
+        const categoryOptions = categoryStore.getCategories.map((category) => {
+          return {
+            text: category.name,
+            value: category.id
+          };
+        });
+  
+        return options.concat(categoryOptions);
+      };
     }
   },
   actions: {

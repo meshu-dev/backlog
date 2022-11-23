@@ -24,7 +24,7 @@
     <v-select
       v-if="categoryStore.getTotal > 0"
       v-model="selectedCategory"
-      :items="categorySelectStore.getCategoryOptions"
+      :items="categorySelectStore.getCategoryOptions(true)"
       item-title="text"
       item-value="value"
       return-object

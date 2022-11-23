@@ -31,8 +31,16 @@ export const useCategoryStore = defineStore({
   },
   actions: {
     async fetchCategories() {
-      const apiCategories = await categoryService.getAll();
-      this.categories = apiCategories['data'] ?? [];
+      try {
+        const apiCategories = await categoryService.getAll();
+        this.categories = apiCategories['data'] ?? [];
+      } catch (error) {
+        if (error.cause == 401) {
+
+        }
+
+        console.log('ERR', error, error.cause, `C: [[[${error.cause}]]]`);
+      }
     },
     setSelectedCategory(categoryId) {
       for (let category of this.categories) {

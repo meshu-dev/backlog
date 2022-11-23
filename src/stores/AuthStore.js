@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import router from '../router';
-import { apiLogin } from '../helpers/auth';
+import { authService } from '../helpers/api';
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -23,16 +23,16 @@ export const useAuthStore = defineStore({
       }
     },
     async login(username, password) {
-      const token = await apiLogin(username, password);
-      //console.log('token', token);
+      const isLoggedIn = await authService.login(username, password);
+      this.loggedIn = isLoggedIn;
 
-      this.loggedIn = true;
-
-      router.push('/');
+      if (isLoggedIn === true) {
+        router.push('/');
+      }
     },
     logout() {
+      authService.logout();
       this.loggedIn = false;
-      localStorage.removeItem('token');
 
       router.push('/login');
     }

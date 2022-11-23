@@ -1,4 +1,5 @@
 <script setup>
+  import router from '@/router';
   import { useLayoutStore } from '@/stores/LayoutStore';
   import { useItemStore } from '@/stores/ItemStore';
 
@@ -10,7 +11,7 @@
   });
 
   const goToEditPage = (itemId) => {
-    console.log('itemId', itemId);
+    router.push(`/item/${itemId}`);
   };
 
   const showDeleteDialog = (itemId) => {

@@ -18,13 +18,30 @@ class ApiService {
       headers
     };
 
-    console.log('apiRequest', params, JSON.stringify(params));
+    // console.log('apiRequest', params, JSON.stringify(params));
 
     if (params) {
       fetchParams['body'] = JSON.stringify(params);
     }
 
-    let response = await fetch(url, fetchParams);
+    let response = null;
+
+    const handleError = (err) => {
+      console.log('ffff');
+      return new Response(JSON.stringify({
+        code: 400,
+        message: 'Stupid network Error'
+      }));
+    }
+
+    console.log('TRY');
+    response = await (fetch(url, fetchParams).catch(handleError));
+
+    if (response.status === 401) {
+      throw new Error('EEEE', { cause: 401 });
+    }
+
+    console.log('TRY 2', response);
     response = await response.json();
 
     return response;

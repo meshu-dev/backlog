@@ -37,6 +37,7 @@ const router = createRouter({
     {
       path: "/item/:id",
       name: "edit-item",
+      props: true,
       meta: {
         requiresAuth: true
       },

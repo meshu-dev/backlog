@@ -1,59 +1,82 @@
 <script setup>
-  import { onMounted } from 'vue';
-  import { useCategoryStore } from '@/stores/CategoryStore';
+  import { ref, toRefs, onMounted } from 'vue';
   import { useItemStore } from '@/stores/ItemStore';
+  import { useCategorySelectStore } from '@/stores/CategorySelectStore';
   import Layout from '@/components/Layout/Layout.vue';
-  import CategorySelector from '@/components/Category/CategorySelector.vue';
-  import ItemList from '@/components/Item/ItemList.vue';
+  import * as formFtns from '@/helpers/item-form';
 
-  const categoryStore = useCategoryStore();
   const itemStore = useItemStore();
-  
-  const form = false;
-  
-  const onSubmit = () => {
+  const categorySelectStore = useCategorySelectStore();
 
+  const props = defineProps({
+    id: [String, Number]
+  });
+
+  const { id } = toRefs(props);
+  const itemId = parseInt(id.value);
+  const isEdit = itemId > 0 ? true : false;
+
+  const form = ref(false);
+  const item = ref(formFtns.getEmptyItem());
+
+  const onSubmit = async () => {
+    const apiParams = formFtns.makeApiParams(item);
+    let result = null;
+
+    if (isEdit === true) {
+      result = await itemStore.editItem(itemId, apiParams);
+    } else {
+      result = await itemStore.addItem(apiParams);
+    }
+
+    console.log('result', result);
+
+    if (result) {
+
+    }
   };
 
   onMounted(async () => {
-    await itemStore.fetchItems();
+    await formFtns.fetchData();
+
+    if (isEdit == true) {
+      itemStore.setSelectedItem(itemId);
+      formFtns.updateItemRef(item);
+    }
   });
 </script>
 
 <template>
   <Layout>
     <template v-slot:main>
-      <div class="add-item">
-        <h1>This</h1>
-      </div>
+      <h1>{{ isEdit ? 'Edit item' : 'Add item' }}</h1>
       <v-form
+        id="item-form"
         v-model="form"
         @submit.prevent="onSubmit">
         <v-text-field
-          v-model="email"
+          v-model="item.name"
           :readonly="loading"
           :rules="[required]"
-          class="mb-2"
+          class="item-field"
           clearable
-          label="Email" />
-        <v-text-field
-          v-model="password"
-          :readonly="loading"
-          :rules="[required]"
-          :type="'password'"
-          clearable
-          label="Password"
-          placeholder="Enter your password" />
-        <br />
+          label="Name" />
+        <v-select
+          v-model="item.category.option"
+          :items="categorySelectStore.getCategoryOptions(false)"
+          item-title="text"
+          item-value="value"
+          return-object
+          single-line
+          label="Select category">
+        </v-select>
         <v-btn
           :disabled="!form"
           :loading="loading"
-          block
           color="success"
-          size="large"
           type="submit"
           variant="elevated">
-          Sign In
+          Submit
         </v-btn>
       </v-form>
     </template>
@@ -61,11 +84,7 @@
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+  #item-form {
+    max-width: 400px;
   }
-}
 </style>
