@@ -12,14 +12,10 @@ export const callApi = async (ftn) => {
       router.push(`/login`);
     }
 
-    // throw error;
-
     layoutStore.setStatusMsg({
       type: 'error',
       text: error.message
     });
-
-    console.log('callApi - ERR', error);
   }
   console.log('callApi - RES', result);
 

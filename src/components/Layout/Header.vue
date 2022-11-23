@@ -21,8 +21,23 @@
     <div id="header-content">
       <span id="header-logo">Backlog</span>
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/item/new">Add Item</RouterLink>
+        <v-btn variant="plain">
+          <RouterLink
+            to="/"
+            class="nav-link">
+            Home
+          </RouterLink>
+        </v-btn>
+        <v-btn variant="plain">
+          <RouterLink
+            to="/item/new"
+            class="nav-link">
+            Add Item
+          </RouterLink>
+        </v-btn>
+        <v-btn variant="plain">
+          <span class="nav-link">Logout</span>
+        </v-btn>
       </nav>
     </div>
   </header>
@@ -35,22 +50,27 @@
   
     #header-content {
       display: flex;
+      justify-content: space-between;
       width: 1000px;
+      height: 100%;
       margin: 0 auto;
+      color: #FFF;
     }
 
     #header-logo {
+      display: flex;
+      align-items: center;
       font-size: 30px;
     }
 
     nav {
       display: flex;
-      margin-left: 20px;
       align-items: center;
 
-      a {
-        margin-right: 5px;
+      .nav-link {
         height: 25px;
+        color: #FFF;
+        text-decoration: none;
       }
     }
   }

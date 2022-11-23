@@ -110,39 +110,6 @@ export const useItemStore = defineStore({
       await callApi(apiFtn);
       return result;
     },
-    /*
-    async fetchItems() {
-      const result = await itemService.getAll();
-      this.items = result['data'] ?? [];
-
-      return true;
-    },
-    async addItem(params) {
-      const result = await itemService.add(params);
-      const item = result['data'] ?? null;
-
-      this.items.push(item);
-      this.item = null;
-
-      return true;
-    },
-    async editItem(id, params) {
-      const result = await itemService.edit(id, params);
-      const item = result['data'] ?? null;
-
-      this.replaceItemInList(item);
-      this.item = null;
-
-      return true;
-    },
-    async deleteItem(id, params) {
-      const result = await itemService.delete(id);
-      console.log('item', result);
-
-      this.deleteItemFromList(id);
-
-      return true;
-    }, */
     setSelectedItem(id) {
       for (const item of this.items) {
         if (item.id == id) {

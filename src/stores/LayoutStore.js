@@ -8,23 +8,24 @@ export const useLayoutStore = defineStore({
   state: () => ({
     statusMsg: null,
     dropdownAllOption: allOption,
+    editMode: false,
     showDeleteDialog: false
   }),
   getters: {
     getDropdownAllOption(state) {
       return state.dropdownAllOption;
     },
-    isDeleteDialogVisible(state) {
-      return state.showDeleteDialog;
-    },
     getStatusMsg(state) {
       return state.statusMsg;
+    },
+    isEditMode(state) {
+      return state.editMode;
+    },
+    isDeleteDialogVisible(state) {
+      return state.showDeleteDialog;
     }
   },
   actions: {
-    toggleDeleteDialog(isVisible) {
-      this.showDeleteDialog = isVisible;
-    },
     setStatusMsg(statusMsg) {
       this.statusMsg = statusMsg;
 
@@ -32,5 +33,11 @@ export const useLayoutStore = defineStore({
         this.statusMsg = null;
       }, statusMsgTime);
     },
+    setEditMode(isEditMode) {
+      this.editMode = isEditMode;
+    },
+    toggleDeleteDialog(isVisible) {
+      this.showDeleteDialog = isVisible;
+    }
   }
 });

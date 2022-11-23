@@ -2,9 +2,11 @@
   import router from '@/router';
   import { useLayoutStore } from '@/stores/LayoutStore';
   import { useItemStore } from '@/stores/ItemStore';
+  import { useCategorySelectStore } from '@/stores/CategorySelectStore';
 
   const layoutStore = useLayoutStore();
   const itemStore = useItemStore();
+  const categorySelectStore = useCategorySelectStore();
 
   const props = defineProps({
     item: Object
@@ -22,17 +24,17 @@
 </script>
 
 <template>
-  <v-col cols="5">
-    <v-card
-      theme="dark"
-    >
+  <v-col>
+    <v-card theme="dark">
       <div class="d-flex flex-no-wrap justify-space-between">
-        <div>
+        <div class="item-view-text">
           <v-card-title class="text-h5">
             {{ item.name }}
           </v-card-title>
-          <v-card-subtitle>Foster the People</v-card-subtitle>
-          <v-card-actions>
+          <v-card-subtitle v-if="categorySelectStore.isAllOption">
+            <v-chip>{{ item.category.name }}</v-chip>
+          </v-card-subtitle>
+          <v-card-actions v-if="layoutStore.isEditMode">
             <v-btn
               class="ml-2"
               variant="outlined"
@@ -52,8 +54,7 @@
         <v-avatar
           class="ma-3"
           size="200"
-          rounded="0"
-        >
+          rounded="0">
           <!-- <v-img src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"></v-img> -->
           <v-img src="https://m.media-amazon.com/images/M/MV5BZGU2OGY5ZTYtMWNhYy00NjZiLWI0NjUtZmNhY2JhNDRmODU3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"></v-img>
         </v-avatar>
@@ -63,15 +64,17 @@
 </template>
 
 <style lang="scss">
-  #category-selector {
-    display: flex;
-
-    label {
-      margin: 15px 20px 0 0;
-    }
-
-    .v-select {
-      max-width: 250px;
-    }
+  .v-col {
+    .v-card {
+      border-radius: 12px;
+      
+      .item-view-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+    } 
   }
 </style>

@@ -16,6 +16,9 @@ export const useCategorySelectStore = defineStore({
     getSelectedOption(state) {
       return state.selectedOption;
     },
+    isAllOption(state) {
+      return state.selectedOption.value == 0 ? true : false;
+    },
     getCategoryOptions(state) {
       return (incAllOption) => {
         const categoryStore = useCategoryStore();

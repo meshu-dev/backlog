@@ -1,3 +1,4 @@
+<!-- 
 <script>
   import { useAuthStore } from '../stores/AuthStore';
 
@@ -17,7 +18,6 @@
         const authStore = useAuthStore();
         const response = await authStore.login(this.email, this.password);
 
-        console.log('Bing!', response);
         this.loading = false;
       },
       required (value) {
@@ -25,6 +25,31 @@
       }
     },
   }
+</script> -->
+
+<script setup>
+  import { ref } from 'vue';
+  import { useAuthStore } from '../stores/AuthStore';
+
+  const form = ref(false);
+  const email = ref(null);
+  const password = ref(null);
+  const loading = ref(false);
+
+  const required = (value) => {
+    return !!value || 'Field is required';
+  }
+  
+  const onSubmit = async () => {
+    if (!form) return;
+
+    loading.value = true;
+
+    const authStore = useAuthStore();
+    const response = await authStore.login(email.value, password.value);
+
+    loading.value = false;
+  };
 </script>
 
 <template>

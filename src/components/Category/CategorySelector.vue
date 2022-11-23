@@ -37,13 +37,14 @@
 <style lang="scss">
   #category-selector {
     display: flex;
-
+    
     label {
       margin: 15px 20px 0 0;
+      font-size: 20px;
     }
 
     .v-select {
-      max-width: 250px;
+      width: 200px;
     }
   }
 </style>
