@@ -1,6 +1,8 @@
 import router from '@/router';
+import { useLayoutStore } from '@/stores/LayoutStore';
 
 export const callApi = async (ftn) => {
+  const layoutStore = useLayoutStore();
   let result = null;
   
   try {
@@ -9,7 +11,17 @@ export const callApi = async (ftn) => {
     if (error.cause == 401) {
       router.push(`/login`);
     }
-    console.log('ERR', error, error.cause, `C: [[[${error.cause}]]]`);
+
+    // throw error;
+
+    layoutStore.setStatusMsg({
+      type: 'error',
+      text: error.message
+    });
+
+    console.log('callApi - ERR', error);
   }
+  console.log('callApi - RES', result);
+
   return result;
 }

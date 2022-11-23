@@ -1,5 +1,6 @@
 import { toRaw } from 'vue';
 import { defineStore } from 'pinia';
+import { callApi } from '../helpers/store';
 import { itemService } from '../helpers/api';
 
 export const useItemStore = defineStore({
@@ -60,6 +61,57 @@ export const useItemStore = defineStore({
   },
   actions: {
     async fetchItems() {
+      const apiFtn = async () => {
+        const result = await itemService.getAll();
+        this.items = result['data'] ?? [];
+      };
+
+      const result = await callApi(apiFtn);
+      return result;
+    },
+    async addItem(params) {
+      let result = null;
+
+      const apiFtn = async () => {
+        result = await itemService.add(params);
+        const item = result['data'] ?? null;
+  
+        this.items.push(item);
+        this.item = null;
+      };
+
+      await callApi(apiFtn);
+      return result;
+    },
+    async editItem(id, params) {
+      let result = null;
+
+      const apiFtn = async () => {
+        result = await itemService.edit(id, params);
+        const item = result['data'] ?? null;
+  
+        this.replaceItemInList(item);
+        this.item = null;
+      };
+
+      await callApi(apiFtn);
+      return result;
+    },
+    async deleteItem(id, params) {
+      let result = null;
+
+      const apiFtn = async () => {
+        result = await itemService.delete(id);
+        console.log('item', result);
+  
+        this.deleteItemFromList(id);
+      };
+
+      await callApi(apiFtn);
+      return result;
+    },
+    /*
+    async fetchItems() {
       const result = await itemService.getAll();
       this.items = result['data'] ?? [];
 
@@ -90,7 +142,7 @@ export const useItemStore = defineStore({
       this.deleteItemFromList(id);
 
       return true;
-    },
+    }, */
     setSelectedItem(id) {
       for (const item of this.items) {
         if (item.id == id) {
@@ -114,15 +166,11 @@ export const useItemStore = defineStore({
       return false;
     },
     deleteItemFromList(id) {
-      for (let itemKey in this.items) {
-        const currentItem = this.items[itemKey];
+      const filteredItems = this.items.filter((item) => {
+        return item.id != id
+      });
 
-        if (currentItem.id == id) {
-          delete this.items[itemKey];
-          return true;
-        }
-      }
-      return false;
+      this.items = filteredItems;
     }
   }
 });

@@ -44,7 +44,7 @@ export const useCategoryStore = defineStore({
         console.log('ERR', error, error.cause, `C: [[[${error.cause}]]]`);
       } */
 
-      callApi(async () => {
+      await callApi(async () => {
         const apiCategories = await categoryService.getAll();
         this.categories = apiCategories['data'] ?? [];
       });

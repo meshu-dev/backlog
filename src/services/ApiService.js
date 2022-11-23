@@ -41,8 +41,19 @@ class ApiService {
       throw new Error('EEEE', { cause: 401 });
     }
 
-    console.log('TRY 2', response);
-    response = await response.json();
+    if (response.status === 204) {
+      return true;
+    }
+
+    console.log('TRY 2', response, response.body);
+
+    try {
+      response = await response.json();
+    } catch (error) {
+      response = null;
+    }
+    
+    console.log('TRY 3', response);
 
     return response;
   }

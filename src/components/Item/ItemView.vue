@@ -11,11 +11,12 @@
   });
 
   const goToEditPage = (itemId) => {
+    itemStore.setSelectedItem(itemId);
     router.push(`/item/${itemId}`);
   };
 
   const showDeleteDialog = (itemId) => {
-    console.log('itemId', itemId);
+    itemStore.setSelectedItem(itemId);
     layoutStore.toggleDeleteDialog(true);
   };
 </script>
