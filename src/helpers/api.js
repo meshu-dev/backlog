@@ -3,23 +3,32 @@ import ApiService from '../services/ApiService';
 import AuthService from '../services/AuthService';
 import ItemService from '../services/ItemService';
 import CategoryService from '../services/CategoryService';
+import OmdbService from '../services/OmdbService';
 
-const apiService = new ApiService(
-  new TokenService(),
-  import.meta.env.VITE_API_URL
+const backlogApiService = new ApiService(
+  import.meta.env.VITE_BACKLOG_API_URL,
+  new TokenService()
 );
 
+const omdbApiService = new ApiService(
+  import.meta.env.VITE_OMDB_API_URL
+);
+
+export const omdbService = new OmdbService(
+  omdbApiService
+)
+
 export const authService = new AuthService(
-  apiService,
+  backlogApiService,
   'login'
 );
 
 export const itemService = new ItemService(
-  apiService,
+  backlogApiService,
   'items'
 );
 
 export const categoryService = new CategoryService(
-  apiService,
+  backlogApiService,
   'categories'
 );

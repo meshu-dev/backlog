@@ -1,10 +1,13 @@
 <script setup>
   import { ref, toRefs, onMounted } from 'vue';
   import router from '@/router';
+  
   import { useLayoutStore } from '@/stores/LayoutStore';
   import { useItemStore } from '@/stores/ItemStore';
   import { useCategorySelectStore } from '@/stores/CategorySelectStore';
+
   import Layout from '@/components/Layout/Layout.vue';
+  import ItemImageSearch from '@/components/Item/ItemImageSearch.vue';
   import * as formFtns from '@/helpers/item-form';
 
   const layoutStore = useLayoutStore();
@@ -81,6 +84,16 @@
           single-line
           label="Select category">
         </v-select>
+        <ItemImageSearch />
+        <!-- 
+        <v-btn
+          id="item-addimage-btn"
+          color="success"
+          type="button"
+          variant="elevated"
+          @click="onAddImageClick">
+          Add image
+        </v-btn> -->
         <v-btn
           :disabled="!form"
           :loading="loading"
@@ -94,8 +107,13 @@
   </Layout>
 </template>
 
-<style>
+<style lang="scss">
   #item-form {
     max-width: 400px;
+
+    #item-addimage-btn {
+      display: block;
+      margin-bottom: 20px;
+    }
   }
 </style>

@@ -1,42 +1,63 @@
 class ApiService {
-  constructor(tokenService, apiUrl) {
-    this.tokenService = tokenService;
+  constructor(apiUrl, tokenService) {
     this.apiUrl = apiUrl;
+    this.tokenService = tokenService;
   }
 
   async sendRequest(method, path, params) {
-    const headers = {'Content-Type': 'application/json'};
     const url = `${this.apiUrl}/${path}`;
-    const token = this.tokenService.get();
 
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+    params = this.prepareParams(method, params);
+
+    let response = null;
+
+    const handleError = this.getErrorHandler();
+
+    response = await (fetch(url, params).catch(handleError));
+    response = await this.checkResponse(response);
+
+    return response;
+  }
+
+  getHeaders() {
+    const headers = {'Content-Type': 'application/json'};
+
+    console.log('this.tokenService', this.tokenService);
+
+    if (this.tokenService) {
+      const token = this.tokenService.get();
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
     }
+    return headers;
+  }
+
+  prepareParams(method, params) {
+    const headers = this.getHeaders();
 
     const fetchParams = {
       method,
       headers
     };
 
-    // console.log('apiRequest', params, JSON.stringify(params));
-
     if (params) {
       fetchParams['body'] = JSON.stringify(params);
     }
+    return fetchParams;
+  }
 
-    let response = null;
-
-    const handleError = (err) => {
-      console.log('ffff');
+  getErrorHandler() {
+    return (err) => {
       return new Response(JSON.stringify({
         code: 400,
         message: 'Stupid network Error'
       }));
     }
+  }
 
-    console.log('TRY');
-    response = await (fetch(url, fetchParams).catch(handleError));
-
+  async checkResponse(response) {
     if (response.status === 401) {
       throw new Error('EEEE', { cause: 401 });
     }
@@ -45,16 +66,13 @@ class ApiService {
       return true;
     }
 
-    console.log('TRY 2', response, response.body);
+    console.log(`API`, response, response.body);
 
     try {
       response = await response.json();
     } catch (error) {
       response = null;
     }
-    
-    console.log('TRY 3', response);
-
     return response;
   }
 }
