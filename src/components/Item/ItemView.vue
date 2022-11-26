@@ -8,9 +8,10 @@
   const itemStore = useItemStore();
   const categorySelectStore = useCategorySelectStore();
 
+  /*
   const props = defineProps({
     item: Object
-  });
+  }); */
 
   const goToEditPage = (itemId) => {
     itemStore.setSelectedItem(itemId);

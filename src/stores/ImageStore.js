@@ -1,3 +1,4 @@
+import { toRaw } from 'vue';
 import { defineStore } from 'pinia';
 import { callApi } from '../helpers/store';
 import { omdbService } from '../helpers/api';
@@ -5,19 +6,20 @@ import { omdbService } from '../helpers/api';
 export const useImageStore = defineStore({
   id: 'image',
   state: () => ({
-    isFormVisible: false,
+    formVisible: false,
     searchResults: [],
     searchedResults: [],
-    entries: []
+    viewerImageUrl: null,
+    imageUrl: null
   }),
   getters: {
     isFormVisible(state) {
-      return state.isFormVisible;
+      return state.formVisible;
     },
-    getSearchResults() {
+    getSearchResults(state) {
       return state.searchResults;
     },
-    getSearchedResults() {
+    getSearchedResults(state) {
       return (term) => {
         if (state.searchedResults[term]) {
           return state.searchedResults[term];
@@ -25,30 +27,34 @@ export const useImageStore = defineStore({
         return null;
       };
     },
-    getEntries() {
-      return (id) => {
-        if (state.searchResults[id]) {
-          return state.searchResults[term];
-        }
-        return [];
+    getSearchResultEntry(state) {
+      return (imdbId) => {
+        const rows = state.searchResults.filter((searchResult) => {
+          return searchResult.imdbID == imdbId
+        });
+
+        const item = rows[0] ? toRaw(rows[0]) : null;
+        return item;
       };
+    },
+    getViewerImageUrl(state) {
+      return state.viewerImageUrl;
+    },
+    getImageUrl(state) {
+      return state.imageUrl;
     }
   },
   actions: {
     setFormVisiblity(isVisible) {
-      this.isFormVisible = isVisible;
+      this.formVisible = isVisible;
     },
     async search(term) {
       const apiFtn = async () => {
-        const result = await omdbService.search(term);
+        let result = await omdbService.search(term);
         result = result['data'] ?? [];
 
         this.searchResults = result;
         this.searchedResults[term] = result;
-
-        console.log('RESULT', result);
-
-        //this.items = result['data'] ?? [];
       };
 
       const result = await callApi(apiFtn);
@@ -57,13 +63,23 @@ export const useImageStore = defineStore({
     async fetchById(id) {
       const apiFtn = async () => {
         const result = await omdbService.getById(id);
-        console.log('RESULT', result);
+        result = result['data'] ?? [];
 
-        //this.items = result['data'] ?? [];
+        this.entry = result;
+        this.entries[result['imdbID']] = result;
       };
 
       const result = await callApi(apiFtn);
       return result;
+    },
+    clearSearchResults() {
+      this.searchResults = [];
+    },
+    setViewerImageUrl(viewerImageUrl) {
+      this.viewerImageUrl = viewerImageUrl;
+    },
+    setImageUrl(imageUrl) {
+      this.imageUrl = imageUrl;
     }
   }
 });

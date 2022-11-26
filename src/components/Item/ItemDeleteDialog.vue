@@ -24,36 +24,33 @@
 </script>
 
 <template>
-  <div>
-    <v-dialog
-      id="item-delete-dialog"
-      v-model="layoutStore.isDeleteDialogVisible"
-    >
-      <v-card>
-        <v-card-title class="text-h5">
-          Delete Item?
-        </v-card-title>
-        <v-card-text>
-          Are you sure you want to delete the 
-          item named "{{ itemStore.getItem.name }}"?
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            color="primary"
-            variant="tonal"
-            @click="deleteItem">
-            Yes
-          </v-btn>
-          <v-btn
-            color="primary"
-            variant="tonal"
-            @click="closeDialog">
-            No
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
+  <v-dialog
+    id="item-delete-dialog"
+    v-model="layoutStore.isDeleteDialogVisible">
+    <v-card>
+      <v-card-title class="text-h5">
+        Delete Item?
+      </v-card-title>
+      <v-card-text>
+        Are you sure you want to delete the 
+        item named "{{ itemStore.getItem.name }}"?
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+          color="primary"
+          variant="tonal"
+          @click="deleteItem">
+          Yes
+        </v-btn>
+        <v-btn
+          color="primary"
+          variant="tonal"
+          @click="closeDialog">
+          No
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style lang="scss">

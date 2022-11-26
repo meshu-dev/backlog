@@ -5,14 +5,16 @@
   import { useLayoutStore } from '@/stores/LayoutStore';
   import { useItemStore } from '@/stores/ItemStore';
   import { useCategorySelectStore } from '@/stores/CategorySelectStore';
+  import { useImageStore } from '@/stores/ImageStore';
 
   import Layout from '@/components/Layout/Layout.vue';
-  import ItemImageSearch from '@/components/Item/ItemImageSearch.vue';
+  import ItemImageDialog from '@/components/Item/ItemImage/ItemImageDialog.vue';
   import * as formFtns from '@/helpers/item-form';
 
   const layoutStore = useLayoutStore();
   const itemStore = useItemStore();
   const categorySelectStore = useCategorySelectStore();
+  const imageStore = useImageStore();
 
   const props = defineProps({
     id: [String, Number]
@@ -22,10 +24,20 @@
   const itemId = parseInt(id.value);
   const isEdit = itemId > 0 ? true : false;
 
-  console.log('isEdit', itemId, id);
+  // console.log('isEdit', itemId, id);
 
   const form = ref(false);
   const item = ref(formFtns.getEmptyItem());
+
+  const dialogRef = ref();
+
+  const onAddImageClick = () => {
+    dialogRef.value.openDialog();
+  };
+
+  const onRemoveImageClick = () => {
+    imageStore.setImageUrl(null);
+  }
 
   const onSubmit = async () => {
     const apiParams = formFtns.makeApiParams(item);
@@ -63,57 +75,85 @@
 <template>
   <Layout>
     <template v-slot:main>
-      <h1>{{ isEdit ? 'Edit item' : 'Add item' }}</h1>
-      <v-form
-        id="item-form"
-        v-model="form"
-        @submit.prevent="onSubmit">
-        <v-text-field
-          v-model="item.name"
-          :readonly="loading"
-          :rules="[required]"
-          class="item-field"
-          clearable
-          label="Name" />
-        <v-select
-          v-model="item.category.option"
-          :items="categorySelectStore.getCategoryOptions(false)"
-          item-title="text"
-          item-value="value"
-          return-object
-          single-line
-          label="Select category">
-        </v-select>
-        <ItemImageSearch />
-        <!-- 
-        <v-btn
-          id="item-addimage-btn"
-          color="success"
-          type="button"
-          variant="elevated"
-          @click="onAddImageClick">
-          Add image
-        </v-btn> -->
-        <v-btn
-          :disabled="!form"
-          :loading="loading"
-          color="success"
-          type="submit"
-          variant="elevated">
-          Submit
-        </v-btn>
-      </v-form>
+      <div id="item-form-wrapper">
+        <div id="item-form">
+          <h1>{{ isEdit ? 'Edit item' : 'Add item' }}</h1>
+          <v-form
+            v-model="form"
+            @submit.prevent="onSubmit">
+            <v-text-field
+              v-model="item.name"
+              :readonly="loading"
+              :rules="[required]"
+              class="item-field"
+              clearable
+              label="Name" />
+            <v-select
+              v-model="item.category.option"
+              :items="categorySelectStore.getCategoryOptions(false)"
+              item-title="text"
+              item-value="value"
+              return-object
+              single-line
+              label="Select category">
+            </v-select>
+            <div id="item-image-btns">
+              <v-btn
+                color="success"
+                type="button"
+                variant="elevated"
+                @click="onAddImageClick">
+                {{ imageStore.getImageUrl ? 'Change image' : 'Add image' }}
+              </v-btn>
+              <v-btn
+                v-if="imageStore.getImageUrl"
+                color="success"
+                type="button"
+                variant="elevated"
+                @click="onRemoveImageClick">
+                Remove image
+              </v-btn>
+            </div>
+            <ItemImageDialog ref="dialogRef" />
+            <v-btn
+              :disabled="!form"
+              :loading="loading"
+              color="success"
+              type="submit"
+              variant="elevated">
+              Submit
+            </v-btn>
+          </v-form>
+        </div>
+        <div id="item-form-image">
+          <v-img
+            v-if="imageStore.getImageUrl"
+            max-height="300"
+            aspect-ratio="1"
+            :src="imageStore.getImageUrl" />
+        </div>
+      </div>
     </template>
   </Layout>
 </template>
 
 <style lang="scss">
-  #item-form {
-    max-width: 400px;
+  #item-form-wrapper {
+    display: flex;
+    flex-direction: row;
 
-    #item-addimage-btn {
-      display: block;
-      margin-bottom: 20px;
+    #item-form {
+      width: 400px;
+
+      #item-image-btns {
+        display: flex;
+        column-gap: 10px;
+        margin-bottom: 20px;
+      }
+    }
+
+    #item-form-image {
+      width: 300px;
     }
   }
 </style>

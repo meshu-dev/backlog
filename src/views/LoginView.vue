@@ -1,32 +1,3 @@
-<!-- 
-<script>
-  import { useAuthStore } from '../stores/AuthStore';
-
-  export default {
-    data: () => ({
-      form: false,
-      email: null,
-      password: null,
-      loading: false,
-    }),
-    methods: {
-      async onSubmit () {
-        if (!this.form) return;
-
-        this.loading = true;
-
-        const authStore = useAuthStore();
-        const response = await authStore.login(this.email, this.password);
-
-        this.loading = false;
-      },
-      required (value) {
-        return !!value || 'Field is required'
-      }
-    },
-  }
-</script> -->
-
 <script setup>
   import { ref } from 'vue';
   import { useAuthStore } from '../stores/AuthStore';
