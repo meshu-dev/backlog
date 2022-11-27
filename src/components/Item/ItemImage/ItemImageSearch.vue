@@ -48,6 +48,8 @@
 </template>
 
 <style lang="scss">
+  @import "@/assets/variables";
+
   #image-search-form {
     width: 400px;
     margin-bottom: 20px;
@@ -58,5 +60,11 @@
     row-gap: 20px;
     flex-direction: column;
     margin-bottom: 20px;
+  }
+
+  @media screen and (max-width: $image-dialog-width) {
+    #image-search-form {
+      width: 100%;
+    }
   }
 </style>

@@ -33,12 +33,24 @@
 </template>
 
 <style lang="scss">
+  @import "@/assets/variables";
+
   #item-list {
     display: flex;
     flex-wrap: wrap;
 
     .v-col {
-      max-width: 500px;
+      width: 335px;
+      max-width: 335px;
+    }
+  }
+
+  @media screen and (max-width: $content-width) {
+    #item-list {
+      .v-col {
+        width: 100%;
+        max-width: 100%;
+      }
     }
   }
 </style>

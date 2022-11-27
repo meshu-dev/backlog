@@ -53,7 +53,6 @@
         </div>
         <v-avatar
           class="ma-3"
-          size="200"
           rounded="0">
           <v-img :src="item.imageUrl ? item.imageUrl : '/src/assets/poster-holder.jpg'">
             <template v-slot:placeholder>
@@ -72,6 +71,8 @@
 </template>
 
 <style lang="scss">
+  @import "@/assets/variables";
+
   .item-view {
     .v-card {
       border-radius: 12px;
@@ -81,8 +82,25 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 100%;
+        width: 155px;
+      }
+
+      .v-avatar {
+        width: 130px;
+        height: 200px;
       }
     } 
+  }
+
+  @media screen and (max-width: $content-width) {
+    .item-view {
+      .v-card {
+        border-radius: 12px;
+        
+        .item-view-text {
+          width: 100%;
+        }
+      }
+    }
   }
 </style>

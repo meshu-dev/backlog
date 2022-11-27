@@ -9,6 +9,7 @@
 
   import Layout from '@/components/Layout/Layout.vue';
   import ItemImageDialog from '@/components/Item/ItemImage/ItemImageDialog.vue';
+  import ItemFormImage from '@/components/Item/ItemForm/ItemFormImage.vue';
   import * as formFtns from '@/helpers/item-form';
 
   const layoutStore = useLayoutStore();
@@ -23,8 +24,6 @@
   const { id } = toRefs(props);
   const itemId = parseInt(id.value);
   const isEdit = itemId > 0 ? true : false;
-
-  // console.log('isEdit', itemId, id);
 
   const form = ref(false);
   const item = ref(formFtns.getEmptyItem());
@@ -49,8 +48,6 @@
     } else {
       result = await itemStore.addItem(apiParams);
     }
-
-    console.log('result', result);
 
     if (result) {
       const msg = isEdit ? 'Item has been edited' : 'Item has been added';
@@ -98,7 +95,12 @@
               single-line
               label="Select category">
             </v-select>
-            <div id="item-image-btns">
+            <div
+              v-if="imageStore.getImageUrl"
+              id="item-form-mobileimage">
+              <ItemFormImage />
+            </div>
+            <div id="item-image-btns" :class="imageStore.getImageUrl ? 'item-image-editbtns' : '' ">
               <v-btn
                 color="success"
                 type="button"
@@ -127,11 +129,7 @@
           </v-form>
         </div>
         <div id="item-form-image">
-          <v-img
-            v-if="imageStore.getImageUrl"
-            max-height="300"
-            aspect-ratio="1"
-            :src="imageStore.getImageUrl" />
+          <ItemFormImage />
         </div>
       </div>
     </template>
@@ -139,9 +137,12 @@
 </template>
 
 <style lang="scss">
+  @import "@/assets/variables";
+
   #item-form-wrapper {
     display: flex;
     flex-direction: row;
+    margin: 0 $content-gap;
 
     #item-form {
       width: 400px;
@@ -151,10 +152,41 @@
         column-gap: 10px;
         margin-bottom: 20px;
       }
+
+      .item-image-editbtns {
+        justify-content: flex-start;
+      }
+
+      #item-form-mobileimage {
+        display: none;
+        margin-bottom: 20px;
+      }
     }
 
     #item-form-image {
       width: 300px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    #item-form-wrapper {
+      flex-direction: column;
+
+      #item-form {
+        width: 100%;
+
+        .item-image-editbtns {
+          justify-content: center;
+        }
+
+        #item-form-mobileimage {
+          display: block;
+        }
+      }
+
+      #item-form-image {
+        display: none;
+      }
     }
   }
 </style>

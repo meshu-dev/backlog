@@ -25,8 +25,11 @@
 </template>
 
 <style lang="scss">
+  @import "@/assets/variables";
+
   #home-header {
     display: flex;
     justify-content: space-between;
+    margin: 0 $content-gap;
   }
 </style>

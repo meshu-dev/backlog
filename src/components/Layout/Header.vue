@@ -36,6 +36,8 @@
 </template>
 
 <style lang="scss">
+  @import "@/assets/variables";
+
   #header {
     background-color: #34495E;
     height: 80px;
@@ -43,9 +45,10 @@
     #header-content {
       display: flex;
       justify-content: space-between;
-      width: 1000px;
+      width: $content-width;
       height: 100%;
       margin: 0 auto;
+      padding: 0 $content-gap;
       color: #FFF;
     }
 
@@ -63,6 +66,14 @@
         height: 25px;
         color: #FFF;
         text-decoration: none;
+      }
+    }
+  }
+
+  @media screen and (max-width: $content-width) {
+    #header {
+      #header-content {
+        width: auto;
       }
     }
   }

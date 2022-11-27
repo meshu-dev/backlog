@@ -4,7 +4,6 @@
 </script>
 
 <template>
-  <!-- <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet"> -->
   <Header />
   <main>
     <StatusMsg />
@@ -13,5 +12,16 @@
 </template>
 
 <style lang="scss">
+  @import "@/assets/variables";
 
+  main {
+    margin: 20px auto 0 auto;
+    width: $content-width;
+  }
+
+  @media screen and (max-width: $content-width) {
+    main {
+      width: auto;
+    }
+  }
 </style>

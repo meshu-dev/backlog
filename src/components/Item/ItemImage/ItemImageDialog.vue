@@ -37,8 +37,10 @@
 </template>
 
 <style lang="scss">
+  @import "@/assets/variables";
+
   #image-search-dialog {
-    width: 800px;
+    width: $image-dialog-width;
     min-height: 600px;
 
     #image-search-content {
@@ -48,6 +50,16 @@
 
       #image-search-imageview {
         width: 100%;
+      }
+    }
+  }
+
+  @media screen and (max-width: $image-dialog-width) {
+    #image-search-dialog {
+      width: 100%;
+
+      #image-search-content {
+        flex-direction: column;
       }
     }
   }
