@@ -1,23 +1,15 @@
-<script>
-  import { RouterLink } from "vue-router";
+<script setup>
+  import { RouterLink } from 'vue-router';
+  import { useAuthStore } from '@/stores/AuthStore';
 
-  export default {
-    name: 'Header',
-    inheritAttrs: false,
-    customOptions: {}
-  }
+  const logout = () => {
+    const authStore = useAuthStore();
+    authStore.logout();
+  };
 </script>
 
 <template>
   <header id="header">
-    <img
-      style="display: none"
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
     <div id="header-content">
       <span id="header-logo">Backlog</span>
       <nav>
@@ -36,7 +28,7 @@
           </RouterLink>
         </v-btn>
         <v-btn variant="plain">
-          <span class="nav-link">Logout</span>
+          <span class="nav-link" @click="logout">Logout</span>
         </v-btn>
       </nav>
     </div>

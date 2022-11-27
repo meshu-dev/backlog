@@ -1,5 +1,5 @@
 <script setup>
-  import { toRaw, onMounted } from 'vue';
+  import { onMounted } from 'vue';
   import { useCategoryStore } from '@/stores/CategoryStore';
   import { useItemStore } from '@/stores/ItemStore';
   import ItemView from '@/components/Item/ItemView.vue';
@@ -9,10 +9,9 @@
   const itemStore = useItemStore();
 
   const getItems = () => {
-    const items = itemStore.getItemsByCategoryId(categoryStore.getCategoryId);
-    //console.log('ITEMS', items);
-    
-    return items;
+    return itemStore.getItemsByCategoryId(
+      categoryStore.getCategory
+    );
   };
   
   onMounted(async () => {
@@ -24,7 +23,6 @@
   <div id="item-list">
     <ItemView
       v-for="item in getItems()"
-      v-if="item"
       :key="item.id"
       :item="item" />
   </div>
@@ -38,5 +36,9 @@
   #item-list {
     display: flex;
     flex-wrap: wrap;
+
+    .v-col {
+      max-width: 500px;
+    }
   }
 </style>

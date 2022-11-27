@@ -40,6 +40,7 @@
   }
 
   const onSubmit = async () => {
+    item.imageUrl = imageStore.getImageUrl;
     const apiParams = formFtns.makeApiParams(item);
     let result = null;
 

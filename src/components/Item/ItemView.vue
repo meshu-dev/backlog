@@ -8,10 +8,9 @@
   const itemStore = useItemStore();
   const categorySelectStore = useCategorySelectStore();
 
-  /*
   const props = defineProps({
     item: Object
-  }); */
+  });
 
   const goToEditPage = (itemId) => {
     itemStore.setSelectedItem(itemId);
@@ -25,7 +24,7 @@
 </script>
 
 <template>
-  <v-col>
+  <v-col class="item-view">
     <v-card theme="dark">
       <div class="d-flex flex-no-wrap justify-space-between">
         <div class="item-view-text">
@@ -56,8 +55,16 @@
           class="ma-3"
           size="200"
           rounded="0">
-          <!-- <v-img src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"></v-img> -->
-          <v-img src="https://m.media-amazon.com/images/M/MV5BZGU2OGY5ZTYtMWNhYy00NjZiLWI0NjUtZmNhY2JhNDRmODU3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"></v-img>
+          <v-img :src="item.imageUrl ? item.imageUrl : '/src/assets/poster-holder.jpg'">
+            <template v-slot:placeholder>
+              <div class="d-flex align-center justify-center fill-height">
+                <v-progress-circular
+                  indeterminate
+                  color="grey-lighten-4"
+                ></v-progress-circular>
+              </div>
+            </template>
+          </v-img>
         </v-avatar>
       </div>
     </v-card>
@@ -65,7 +72,7 @@
 </template>
 
 <style lang="scss">
-  .v-col {
+  .item-view {
     .v-card {
       border-radius: 12px;
       

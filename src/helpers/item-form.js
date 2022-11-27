@@ -12,7 +12,8 @@ export const getEmptyItem = () => {
       id: 0,
       name: '',
       option: null
-    }
+    },
+    imageUrl: ''
   }
 }
 
@@ -38,11 +39,14 @@ export const updateItemRef = (item) => {
     text: selectedItem.category.name,
     value: selectedItem.category.id
   };
+
+  item.imageUrl = itemStore.getImageUrl;
 }
 
 export const makeApiParams = (item) => {
   return {
     name: item.value.name,
-    category_id: item.value.category.option.value
+    category_id: item.value.category.option.value,
+    image_url: item.imageUrl
   };
 }
