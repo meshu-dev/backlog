@@ -16,9 +16,9 @@ export const useAuthStore = defineStore({
   actions: {
     verifyAuth() {
       if (this.isAppLoaded === false) {
-        const token = localStorage.getItem('token');
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-        this.loggedIn = token ? true : false;
+        this.loggedIn = isLoggedIn === true ? true : false;
         this.isAppLoaded = true;
       }
     },
@@ -27,11 +27,12 @@ export const useAuthStore = defineStore({
       this.loggedIn = isLoggedIn;
 
       if (isLoggedIn === true) {
+        localStorage.setItem('isLoggedIn', true);
         router.push('/');
       }
     },
     logout() {
-      authService.logout();
+      localStorage.removeItem('isLoggedIn');
       this.loggedIn = false;
 
       router.push('/login');

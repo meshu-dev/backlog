@@ -11,8 +11,8 @@ class AuthService {
       { username, password }
     );
 
-    if (response['token']) {
-      localStorage.setItem('token', response['token']);
+    if (response === true) {
+      //localStorage.setItem('token', response['token']);
       return true;
     }
     return false;
