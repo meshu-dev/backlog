@@ -42,11 +42,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
-  authStore.verifyAuth();
+  authStore.fetchAuthStatus();
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // console.log('authStore', authStore, authStore.isLoggedIn);
-
     if (authStore.isLoggedIn === false) {
       next("login");
       return;

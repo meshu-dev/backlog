@@ -11,16 +11,7 @@ class AuthService {
       { username, password }
     );
 
-    if (response === true) {
-      //localStorage.setItem('token', response['token']);
-      return true;
-    }
-    return false;
-  }
-
-  logout() {
-    localStorage.removeItem('token');
-    return true;
+    return response === true ? true : false;
   }
 }
 

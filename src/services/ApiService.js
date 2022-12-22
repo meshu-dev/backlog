@@ -1,7 +1,6 @@
 class ApiService {
-  constructor(apiUrl, tokenService) {
+  constructor(apiUrl) {
     this.apiUrl = apiUrl;
-    this.tokenService = tokenService;
   }
 
   async sendRequest(method, path, params) {
@@ -19,23 +18,8 @@ class ApiService {
     return response;
   }
 
-  getHeaders() {
-    const headers = {'Content-Type': 'application/json'};
-
-    console.log('this.tokenService', this.tokenService);
-
-    if (this.tokenService) {
-      const token = this.tokenService.get();
-
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-    }
-    return headers;
-  }
-
   prepareParams(method, params) {
-    const headers = {}; //this.getHeaders();
+    const headers = {'Content-Type': 'application/json'};
 
     const fetchParams = {
       method,
@@ -46,9 +30,6 @@ class ApiService {
     if (params) {
       fetchParams['body'] = JSON.stringify(params);
     }
-
-    //fetchParams['headers']['Accept'] = 'application/json';
-    fetchParams['headers']['Content-Type'] = 'application/json';
 
     return fetchParams;
   }

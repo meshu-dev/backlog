@@ -10,7 +10,7 @@
 
   const getItems = () => {
     return itemStore.getItemsByCategoryId(
-      categoryStore.getCategory
+      categoryStore.getCategoryId
     );
   };
   
