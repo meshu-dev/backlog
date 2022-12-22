@@ -35,16 +35,21 @@ class ApiService {
   }
 
   prepareParams(method, params) {
-    const headers = this.getHeaders();
+    const headers = {}; //this.getHeaders();
 
     const fetchParams = {
       method,
-      headers
+      headers,
+      credentials: 'include'
     };
 
     if (params) {
       fetchParams['body'] = JSON.stringify(params);
     }
+
+    //fetchParams['headers']['Accept'] = 'application/json';
+    fetchParams['headers']['Content-Type'] = 'application/json';
+
     return fetchParams;
   }
 
