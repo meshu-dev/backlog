@@ -21,6 +21,11 @@
     itemStore.setSelectedItem(itemId);
     layoutStore.toggleDeleteDialog(true);
   };
+
+  const getImage = (item) => {
+    const apiUrl = import.meta.env.VITE_BACKLOG_API_URL;
+    return item.imageUrl ? item.imageUrl : `${apiUrl}/images/poster-holder.jpg`;
+  };
 </script>
 
 <template>
@@ -54,7 +59,7 @@
         <v-avatar
           class="ma-3"
           rounded="0">
-          <v-img :src="item.imageUrl ? item.imageUrl : '/src/assets/poster-holder.jpg'">
+          <v-img :src="getImage(item)">
             <template v-slot:placeholder>
               <div class="d-flex align-center justify-center fill-height">
                 <v-progress-circular
