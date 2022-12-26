@@ -17,7 +17,5 @@ export const callApi = async (ftn) => {
       text: error.message
     });
   }
-  console.log('callApi - RES', result);
-
   return result;
 }

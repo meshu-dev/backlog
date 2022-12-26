@@ -52,13 +52,16 @@ class ApiService {
       return true;
     }
 
-    console.log(`API`, response, response.body);
+    const url = response.url ? response.url : '';
 
     try {
       response = await response.json();
     } catch (error) {
       response = null;
     }
+
+    console.log(`API Call | Url: ${url}`, response);
+
     return response;
   }
 }
