@@ -1,42 +1,36 @@
-# backlog
+# Backlog app
 
-This template should help get you started developing with Vue 3 in Vite.
+An app used to keep a backlog of movies and TV shows.
 
-## Recommended IDE Setup
+This is a Vue.js project which retrieves and updates data from the Backlog API and OMDB API.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Setup
 
-## Customize configuration
+This project requires both the backlog-api and omdb-api apps to work.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### Dev Setup
 
-## Project Setup
-
-```sh
+- Install packages
+```
 npm install
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
+-  Copy env file
+```
+cp .env.example .env
+```
+-  Add Backlog API and OMDB API urls to the following env variables
+```
+VITE_BACKLOG_API_URL
+VITE_OMDB_API_URL
+```
+-  Run on local
+```
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Static Site Hosting
 
-```sh
+- Run the following command to generate static site
+```
 npm run build
 ```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
-# backlog
