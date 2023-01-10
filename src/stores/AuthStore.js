@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-import router from '../router';
-import { authService } from '../helpers/api';
+import router from '@/router';
+import { authService } from '@/helpers/api';
+import { useLayoutStore } from '@/stores/LayoutStore';
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -16,19 +17,24 @@ export const useAuthStore = defineStore({
   actions: {
     fetchAuthStatus() {
       if (this.isAppLoaded === false) {
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const isLoggedIn = Boolean(localStorage.getItem('isLoggedIn'));
 
         this.loggedIn = isLoggedIn === true ? true : false;
         this.isAppLoaded = true;
       }
     },
     async login(username, password) {
-      const isLoggedIn = await authService.login(username, password);
-      this.loggedIn = isLoggedIn;
+      const response = await authService.login(username, password);
+      this.loggedIn = response === true ? true : false;
 
-      if (isLoggedIn === true) {
+      const layoutStore = useLayoutStore();
+      layoutStore.clearStatusMsg();
+
+      if (this.loggedIn === true) {  
         localStorage.setItem('isLoggedIn', true);
-        router.push('/');
+        await router.push('/');
+      } else if (response['message']) {
+        layoutStore.setStatusMsg('error', 'Login details were incorrect. Please try again');
       }
     },
     logout() {

@@ -10,28 +10,32 @@
 
 <template>
   <header id="header">
-    <div id="header-content">
-      <span id="header-logo">Backlog</span>
-      <nav>
-        <v-btn variant="plain">
-          <RouterLink
-            to="/"
-            class="nav-link">
-            Home
-          </RouterLink>
-        </v-btn>
-        <v-btn variant="plain">
-          <RouterLink
-            to="/item/new"
-            class="nav-link">
-            Add Item
-          </RouterLink>
-        </v-btn>
-        <v-btn variant="plain">
-          <span class="nav-link" @click="logout">Logout</span>
-        </v-btn>
-      </nav>
-    </div>
+    <v-app>
+      <v-app-bar color="primary">
+        <div id="header-content">
+          <span id="header-logo">Backlog</span>
+          <nav>
+            <v-btn variant="plain">
+              <RouterLink
+                to="/"
+                class="nav-link">
+                Home
+              </RouterLink>
+            </v-btn>
+            <v-btn variant="plain">
+              <RouterLink
+                to="/item/new"
+                class="nav-link">
+                Add Item
+              </RouterLink>
+            </v-btn>
+            <v-btn variant="plain">
+              <span class="nav-link" @click="logout">Logout</span>
+            </v-btn>
+          </nav>
+        </div>
+      </v-app-bar>
+    </v-app>
   </header>
 </template>
 
@@ -39,7 +43,7 @@
   @import "@/assets/variables";
 
   #header {
-    background-color: #34495E;
+    /* background-color: #34495E; */
     height: 80px;
   
     #header-content {
@@ -62,10 +66,14 @@
       display: flex;
       align-items: center;
 
-      .nav-link {
-        height: 25px;
-        color: #FFF;
-        text-decoration: none;
+      .v-btn {
+        line-height: 20px;
+        
+        .nav-link {
+          height: 25px;
+          color: #FFF;
+          text-decoration: none;
+        }
       }
     }
   }
@@ -73,7 +81,8 @@
   @media screen and (max-width: $content-width) {
     #header {
       #header-content {
-        width: auto;
+        width: 100%;
+        margin: 0;
       }
     }
   }

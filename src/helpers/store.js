@@ -11,11 +11,7 @@ export const callApi = async (ftn) => {
     if (error.cause == 401) {
       router.push(`/login`);
     }
-
-    layoutStore.setStatusMsg({
-      type: 'error',
-      text: error.message
-    });
+    layoutStore.setStatusMsg('error', error.message);
   }
   return result;
 }

@@ -30,26 +30,28 @@
 
 <template>
   <v-col class="item-view">
-    <v-card theme="dark">
+    <v-card>
       <div class="d-flex flex-no-wrap justify-space-between">
         <div class="item-view-text">
           <v-card-title class="text-h5">
             {{ item.name }}
           </v-card-title>
           <v-card-subtitle v-if="categorySelectStore.isAllOption">
-            <v-chip>{{ item.category.name }}</v-chip>
+            <v-chip variant="outlined">{{ item.category.name }}</v-chip>
           </v-card-subtitle>
           <v-card-actions v-if="layoutStore.isEditMode">
             <v-btn
               class="ml-2"
-              variant="outlined"
+              color="primary"
+              variant="flat"
               size="small"
               v-on:click="() => { goToEditPage(item.id) }">
               Edit
             </v-btn>
             <v-btn
               class="ml-2"
-              variant="outlined"
+              color="primary"
+              variant="flat"
               size="small"
               v-on:click="() => { showDeleteDialog(item.id) }">
               Delete
@@ -80,6 +82,7 @@
 
   .item-view {
     .v-card {
+      background-color: $panel-bgcolor;
       border-radius: 12px;
       
       .item-view-text {
@@ -88,6 +91,12 @@
         align-items: center;
         justify-content: center;
         width: 155px;
+      }
+
+      .v-card-subtitle {
+        span {
+          color: #000;
+        }
       }
 
       .v-avatar {

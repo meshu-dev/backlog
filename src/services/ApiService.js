@@ -45,7 +45,11 @@ class ApiService {
 
   async checkResponse(response) {
     if (response.status === 401) {
-      throw new Error('EEEE', { cause: 401 });
+      /*
+      return {
+        error: "Unauthenticated",
+        code: 401
+      }; */
     }
 
     if (response.status === 204) {

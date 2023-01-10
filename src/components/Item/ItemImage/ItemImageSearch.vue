@@ -27,9 +27,8 @@
         label="Search title" />
       <v-btn
         id="item-addimage-btn"
-        color="success"
-        type="button"
-        variant="elevated"
+        color="secondary"
+        variant="flat"
         :loading="isSearchLoading"
         @click="onSearchClick">
         Search

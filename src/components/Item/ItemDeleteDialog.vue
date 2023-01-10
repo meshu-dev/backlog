@@ -8,8 +8,14 @@
   
   const deleteItem = async () => {
     if (itemStore.getItem) {
+      const name = itemStore.getItem.name;
       const result = await itemStore.deleteItem(itemStore.getItem.id);
-      console.log('RESULT', result);
+
+      if (result === true) {
+        const layoutStore = useLayoutStore();
+        layoutStore.setStatusMsg('success', `Item named "${name}" has been deleted`);
+      }
+
       closeDialog();
     }
   };
@@ -37,14 +43,14 @@
       </v-card-text>
       <v-card-actions>
         <v-btn
-          color="primary"
-          variant="tonal"
+          color="secondary"
+          variant="flat"
           @click="deleteItem">
           Yes
         </v-btn>
         <v-btn
-          color="primary"
-          variant="tonal"
+          color="secondary"
+          variant="flat"
           @click="closeDialog">
           No
         </v-btn>

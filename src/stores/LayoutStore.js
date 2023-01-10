@@ -26,12 +26,18 @@ export const useLayoutStore = defineStore({
     }
   },
   actions: {
-    setStatusMsg(statusMsg) {
-      this.statusMsg = statusMsg;
+    setStatusMsg(type, text) {
+      this.statusMsg = {
+        type: type,
+        text: text
+      };
 
       setTimeout(() => {
         this.statusMsg = null;
       }, statusMsgTime);
+    },
+    clearStatusMsg() {
+      this.statusMsg = null;
     },
     setEditMode(isEditMode) {
       this.editMode = isEditMode;

@@ -25,9 +25,8 @@
     <div id="image-viewer-btnwrapper">
       <v-btn
         id="item-addimage-btn"
-        color="success"
-        type="button"
-        variant="elevated"
+        color="secondary"
+        variant="flat"
         @click="onAddImageClick">
         Use Image
       </v-btn>

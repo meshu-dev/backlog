@@ -11,7 +11,7 @@ class AuthService {
       { username, password }
     );
 
-    return response === true ? true : false;
+    return response;
   }
 }
 

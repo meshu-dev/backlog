@@ -102,8 +102,6 @@ export const useItemStore = defineStore({
 
       const apiFtn = async () => {
         result = await itemService.delete(id);
-        console.log('item', result);
-  
         this.deleteItemFromList(id);
       };
 

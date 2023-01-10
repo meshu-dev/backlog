@@ -27,6 +27,15 @@
 
   const form = ref(false);
   const item = ref(formFtns.getEmptyItem());
+  const loading = ref(false);
+
+  const required = (value) => {
+    return (value ? true : false) || 'Field is required';
+  }
+
+  const isMinLength = (value) => {
+    return (value && value.length >= 3) || 'Field length must be over 3 characters';
+  }
 
   const dialogRef = ref();
 
@@ -50,13 +59,10 @@
     }
 
     if (result) {
+      await router.push(`/`);
+        
       const msg = isEdit ? 'Item has been edited' : 'Item has been added';
-
-      layoutStore.setStatusMsg({
-        type: 'success',
-        text: msg
-      });
-      router.push(`/`);
+      layoutStore.setStatusMsg('success', msg);
     }
   };
 
@@ -80,39 +86,37 @@
             v-model="form"
             @submit.prevent="onSubmit">
             <v-text-field
+              label="Name"
               v-model="item.name"
-              :readonly="loading"
-              :rules="[required]"
               class="item-field"
-              clearable
-              label="Name" />
+              :readonly="loading"
+              :rules="[required, isMinLength]"
+              clearable />
             <v-select
               v-model="item.category.option"
               :items="categorySelectStore.getCategoryOptions(false)"
               item-title="text"
               item-value="value"
+              :readonly="loading"
+              :rules="[required]"
               return-object
               single-line
               label="Select category">
             </v-select>
-            <div
-              v-if="imageStore.getImageUrl"
-              id="item-form-mobileimage">
+            <div v-if="imageStore.getImageUrl" id="item-form-mobileimage">
               <ItemFormImage />
             </div>
             <div id="item-image-btns" :class="imageStore.getImageUrl ? 'item-image-editbtns' : '' ">
               <v-btn
-                color="success"
-                type="button"
-                variant="elevated"
+                color="secondary"
+                variant="flat"
                 @click="onAddImageClick">
                 {{ imageStore.getImageUrl ? 'Change image' : 'Add image' }}
               </v-btn>
               <v-btn
                 v-if="imageStore.getImageUrl"
-                color="success"
-                type="button"
-                variant="elevated"
+                color="secondary"
+                variant="flat"
                 @click="onRemoveImageClick">
                 Remove image
               </v-btn>
@@ -121,9 +125,9 @@
             <v-btn
               :disabled="!form"
               :loading="loading"
-              color="success"
-              type="submit"
-              variant="elevated">
+              color="secondary"
+              variant="flat"
+              type="submit">
               Submit
             </v-btn>
           </v-form>

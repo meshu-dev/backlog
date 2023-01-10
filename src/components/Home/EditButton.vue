@@ -9,10 +9,10 @@
 
 <template>
   <v-btn
-    variant="tonal"
+    color="secondary"
+    variant="flat"
     size="large"
     icon
-    color="info"
     @click="toggleMode">
     <v-icon>{{ layoutStore.isEditMode ? 'mdi-pencil-off' : 'mdi-pencil' }}</v-icon>
   </v-btn>
