@@ -44,16 +44,6 @@ class ApiService {
   }
 
   async checkResponse(response) {
-    console.log('response', response);
-    
-    if (response.status === 401) {
-      /*
-      return {
-        error: "Unauthenticated",
-        code: 401
-      }; */
-    }
-
     if (response.status === 204) {
       return true;
     }
@@ -64,6 +54,14 @@ class ApiService {
       response = await response.json();
     } catch (error) {
       response = null;
+    }
+    
+    if (response.status === 401) {
+      return {
+        error: true,
+        message: response.message,
+        code: 401
+      };
     }
 
     console.log(`API Call | Url: ${url}`, response);

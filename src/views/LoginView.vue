@@ -1,7 +1,9 @@
 <script setup>
   import { ref } from 'vue';
+  import router from '@/router';
   import StatusMsg from '@/components/Layout/StatusMsg.vue';
   import { useAuthStore } from '@/stores/AuthStore';
+  import { useLayoutStore } from '@/stores/LayoutStore';
 
   const form = ref(false);
   const email = ref(null);
@@ -18,8 +20,21 @@
     loading.value = true;
 
     if (email.value && password.value) {
+      const layoutStore = useLayoutStore();
       const authStore = useAuthStore();
-      await authStore.login(email.value, password.value);
+
+      layoutStore.clearStatusMsg();
+      const result = await authStore.login(email.value, password.value);
+
+      if (authStore.loggedIn === true) {  
+        localStorage.setItem('isLoggedIn', true);
+        await router.push('/');
+      } else if (result['message']) {
+        layoutStore.setStatusMsg(
+          'error',
+          'Login details were incorrect. Please try again'
+        );
+      }
     }
 
     loading.value = false;

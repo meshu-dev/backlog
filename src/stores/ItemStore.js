@@ -70,11 +70,13 @@ export const useItemStore = defineStore({
       const apiFtn = async () => {
         const result = await itemService.getAll();
         this.items = result['data'] ?? [];
+
+        return result;
       };
 
       const result = await callApi(apiFtn);
       this.isFetching = false;
-      
+
       return result;
     },
     async addItem(params) {
