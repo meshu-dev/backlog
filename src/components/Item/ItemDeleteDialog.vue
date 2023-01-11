@@ -1,5 +1,6 @@
 <script setup>
   import { onMounted } from 'vue';
+  import router from '@/router';
   import { useLayoutStore } from '@/stores/LayoutStore';
   import { useItemStore } from '@/stores/ItemStore';
 
@@ -14,6 +15,8 @@
       if (result === true) {
         const layoutStore = useLayoutStore();
         layoutStore.setStatusMsg('success', `Item named "${name}" has been deleted`);
+
+        router.push(`/`);
       }
 
       closeDialog();

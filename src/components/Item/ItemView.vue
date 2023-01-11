@@ -91,6 +91,14 @@
         align-items: center;
         justify-content: center;
         width: 155px;
+
+        .v-card-title {
+          display: flex;
+          text-align: center;
+          align-items: center;
+          height: 120px;
+          white-space: break-spaces;
+        }
       }
 
       .v-card-subtitle {

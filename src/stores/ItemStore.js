@@ -87,6 +87,8 @@ export const useItemStore = defineStore({
         const item = result['data'] ?? null;
   
         this.items.push(item);
+        this.reorderItems();
+
         this.item = null;
       };
 
@@ -101,6 +103,8 @@ export const useItemStore = defineStore({
         const item = result['data'] ?? null;
   
         this.replaceItemInList(item);
+        this.reorderItems();
+        
         this.item = null;
       };
 
@@ -139,6 +143,13 @@ export const useItemStore = defineStore({
         }
       }
       return false;
+    },
+    reorderItems() {
+      const reorderedItems = this.items.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+
+      this.items = reorderedItems;
     },
     deleteItemFromList(id) {
       const filteredItems = this.items.filter((item) => {

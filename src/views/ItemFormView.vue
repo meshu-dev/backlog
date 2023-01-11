@@ -63,10 +63,12 @@
     loading.value = false;
 
     if (result) {
-      await router.push(`/`);
+      router.push(`/`);
         
       const msg = isEdit ? 'Item has been edited' : 'Item has been added';
       layoutStore.setStatusMsg('success', msg);
+    
+      imageStore.setImageUrl(null);
     }
   };
 

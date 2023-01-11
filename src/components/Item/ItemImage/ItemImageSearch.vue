@@ -39,7 +39,7 @@
         v-for='searchResult in imageStore.getSearchResults'
         :key="searchResult['imdbID']"
         width="400"
-        link="true"
+        :link="true"
         :title="searchResult['Title']"
         @click="(() => onSearchResultClick(searchResult['imdbID']))" />
     </div>

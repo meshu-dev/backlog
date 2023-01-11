@@ -7,6 +7,7 @@ export const useLayoutStore = defineStore({
   state: () => ({
     loaderStatus: false,
     statusMsg: null,
+    statusMsgTimeout: null,
     editMode: false,
     showDeleteDialog: false
   }),
@@ -29,12 +30,16 @@ export const useLayoutStore = defineStore({
       this.loaderStatus = isLoading;
     },
     setStatusMsg(type, text) {
+      if (this.statusMsgTimeout) {
+        clearTimeout(this.statusMsgTimeout);
+      }
+      
       this.statusMsg = {
         type: type,
         text: text
       };
 
-      setTimeout(() => {
+      this.statusMsgTimeout = setTimeout(() => {
         this.statusMsg = null;
       }, statusMsgTime);
     },
