@@ -8,7 +8,6 @@
   const selectedCategory = ref(categorySelectStore.getSelectedOption);
 
   const onCategoryChange = (data) => {
-    console.log('data', data);
     categorySelectStore.setSelectedOption(data);
     categoryStore.setSelectedCategory(data.value);
   };

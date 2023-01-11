@@ -18,13 +18,8 @@ export const getEmptyItem = () => {
 }
 
 export const fetchData = async () => {
-  if (categoryStore.getTotal == 0) {
-    await categoryStore.fetchCategories();
-  }
-
-  if (itemStore.getTotal == 0) {
-    await itemStore.fetchItems();
-  }
+  await categoryStore.fetchCategories();
+  await itemStore.fetchItems();
 }
 
 export const updateItemRef = (item) => {

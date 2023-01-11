@@ -1,19 +1,18 @@
 import { defineStore } from 'pinia';
 
-const allOption = { text: 'All', value: 0 };
 const statusMsgTime = 10000; // 10 Seconds
 
 export const useLayoutStore = defineStore({
   id: 'layout',
   state: () => ({
+    loaderStatus: false,
     statusMsg: null,
-    dropdownAllOption: allOption,
     editMode: false,
     showDeleteDialog: false
   }),
   getters: {
-    getDropdownAllOption(state) {
-      return state.dropdownAllOption;
+    isLoading(state) {
+      return state.loaderStatus;
     },
     getStatusMsg(state) {
       return state.statusMsg;
@@ -26,6 +25,9 @@ export const useLayoutStore = defineStore({
     }
   },
   actions: {
+    setLoadingStatus(isLoading) {
+      this.loaderStatus = isLoading;
+    },
     setStatusMsg(type, text) {
       this.statusMsg = {
         type: type,

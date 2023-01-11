@@ -8,8 +8,8 @@ export const useItemStore = defineStore({
   state: () => ({
     items: [],
     item: null,
-    total: 0,
-    pageLimit: 10
+    pageLimit: 10,
+    isFetching: false
   }),
   getters: {
     getItems(state) {
@@ -53,7 +53,7 @@ export const useItemStore = defineStore({
       return state.item;
     },
     getTotal(state) {
-      return state.total;
+      return state.items.length;
     },
     getPageLimit(state) {
       return state.pageLimit;
@@ -61,12 +61,20 @@ export const useItemStore = defineStore({
   },
   actions: {
     async fetchItems() {
+      if (this.items.length > 0 || this.isFetching === true) {
+        return false;
+      }
+
+      this.isFetching = true;
+
       const apiFtn = async () => {
         const result = await itemService.getAll();
         this.items = result['data'] ?? [];
       };
 
       const result = await callApi(apiFtn);
+      this.isFetching = false;
+      
       return result;
     },
     async addItem(params) {

@@ -1,11 +1,13 @@
 <script setup>
-  import Header from './Header.vue';
-  import StatusMsg from './StatusMsg.vue';
+  import Header from '@/components/Layout/Header.vue';
+  import Loader from '@/components/Layout/Loader.vue';
+  import StatusMsg from '@/components/Layout/StatusMsg.vue';
 </script>
 
 <template>
   <Header />
   <main>
+    <Loader />
     <StatusMsg />
     <slot name="main" />
   </main>

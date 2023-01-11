@@ -52,11 +52,15 @@
     const apiParams = formFtns.makeApiParams(item);
     let result = null;
 
+    loading.value = true;
+
     if (isEdit === true) {
       result = await itemStore.editItem(itemId, apiParams);
     } else {
       result = await itemStore.addItem(apiParams);
     }
+
+    loading.value = false;
 
     if (result) {
       await router.push(`/`);

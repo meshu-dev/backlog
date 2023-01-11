@@ -7,8 +7,8 @@ export const useCategoryStore = defineStore({
   state: () => ({
     categories: [],
     category: null,
-    total: 0,
-    pageLimit: 10
+    pageLimit: 10,
+    isFetching: false
   }),
   getters: {
     getCategories(state) {
@@ -32,10 +32,18 @@ export const useCategoryStore = defineStore({
   },
   actions: {
     async fetchCategories() {
+      if (this.categories.length > 0 || this.isFetching === true) {
+        return false;
+      }
+
+      this.isFetching = true;
+
       await callApi(async () => {
         const apiCategories = await categoryService.getAll();
         this.categories = apiCategories['data'] ?? [];
       });
+
+      this.isFetching = false;
     },
     setSelectedCategory(categoryId) {
       for (let category of this.categories) {

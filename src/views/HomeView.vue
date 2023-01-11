@@ -5,10 +5,21 @@
   import CategorySelector from '@/components/Category/CategorySelector.vue';
   import EditButton from '@/components/Home/EditButton.vue';
   import ItemList from '@/components/Item/ItemList.vue';
+  import { useLayoutStore } from '@/stores/LayoutStore';
 
   onMounted(async () => {
+    const layoutStore = useLayoutStore();
     const itemStore = useItemStore();
+
+    if (itemStore.getTotal == 0) {
+      layoutStore.setLoadingStatus(true);
+    }
+
     await itemStore.fetchItems();
+
+    if (layoutStore.isLoading) {
+      layoutStore.setLoadingStatus(false);
+    }
   });
 </script>
 
