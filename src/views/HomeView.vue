@@ -9,11 +9,14 @@
 
   onMounted(async () => {
     const layoutStore = useLayoutStore();
+    layoutStore.setLoadingStatus(true);
+
     const itemStore = useItemStore();
 
+    /*
     if (itemStore.getTotal == 0) {
       layoutStore.setLoadingStatus(true);
-    }
+    } */
 
     await itemStore.fetchItems();
 

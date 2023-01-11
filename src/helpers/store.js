@@ -8,7 +8,7 @@ const authCheck = async (response) => {
   const authStore = useAuthStore();
 
   if (authStore.isLoggedIn === true &&
-    response['code'] === 401
+    response && response['code'] === 401
   ) {
     authStore.logout();
     await router.push('/login');
@@ -18,7 +18,7 @@ const authCheck = async (response) => {
       'Your login has expired. Please login again'
     );
   }
-};
+}
 
 export const callApi = async (ftn) => {
   const layoutStore = useLayoutStore();
