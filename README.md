@@ -15,11 +15,13 @@ This project requires both the backlog-api and omdb-api apps to work.
 ```
 npm install
 ```
+
 -  Copy env file
 
 ```
 cp .env.example .env
 ```
+
 -  Add Backlog API and OMDB API urls to the following env variables
 
 ```
