@@ -33,7 +33,7 @@
     <v-card>
       <div class="d-flex flex-no-wrap justify-space-between">
         <div class="item-view-text">
-          <v-card-title class="text-h5">
+          <v-card-title :class="`text-h5 ${(item.name.length > 20 ? 'item-view-longtitle' : '')}`">
             {{ item.name }}
           </v-card-title>
           <v-card-subtitle v-if="categorySelectStore.isAllOption">
@@ -98,6 +98,11 @@
           align-items: center;
           height: 120px;
           white-space: break-spaces;
+        }
+
+        .item-view-longtitle {
+          font-size: 16px !important;
+          line-height: 1.5rem;
         }
       }
 

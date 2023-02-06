@@ -127,7 +127,9 @@
                 Remove image
               </v-btn>
             </div>
-            <ItemImageDialog ref="dialogRef" />
+            <ItemImageDialog
+              ref="dialogRef"
+              :item="item" />
             <v-btn
               :disabled="!form"
               :loading="loading"

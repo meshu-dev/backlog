@@ -3,6 +3,10 @@
   import ItemImageSearch from '@/components/Item/ItemImage/ItemImageSearch.vue';
   import ItemImageViewer from '@/components/Item/ItemImage/ItemImageViewer.vue';
 
+  const props = defineProps({
+    item: Object
+  });
+
   const isDialogVisible = ref(false);
 
   const openDialog = () => {
@@ -27,7 +31,7 @@
         Add image
       </v-card-title>
       <v-container id="image-search-content">
-        <ItemImageSearch />
+        <ItemImageSearch :item="props.item" />
         <div id="image-search-imageview">
           <ItemImageViewer v-on:closeDialog="closeDialog" />
         </div>

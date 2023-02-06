@@ -1,10 +1,21 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, isProxy, toRaw } from 'vue';
   import { useImageStore } from '@/stores/ImageStore';
+
+  const props = defineProps({
+    item: Object
+  });
 
   const imageStore = useImageStore();
 
-  const searchTerm = ref('');
+  let item = props.item;
+
+  if (isProxy(props.item)) {
+    item = toRaw(props.item);
+  } 
+
+  const searchTerm = ref(item ? item.name : '');
+
   const isSearchLoading = ref(false);
 
   const onSearchClick = async () => {
